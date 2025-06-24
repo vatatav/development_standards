@@ -286,43 +286,22 @@ Now, these tools will run automatically on `git commit`.
 * **Atomic Commits:** Each commit should represent a single logical change. Avoid large, unrelated changes in one commit.
 * **Commit Messages:** Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification. This helps in generating changelogs and understanding history.
     * Format: `<type>[optional scope]: <description>`
-    * Example types: `feat` (new feature), `fix` (bug fix), `docs` (documentation), `style` (formatting, PEP8), `refactor`, `test`, `chore` (build process, auxiliary tools).
-    * Example:
-        ```
-        feat: add user registration endpoint
+    * Example types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.
 
-        Implement the API endpoint for new user registration.
-        Includes input validation and password hashing.
-        ```
-        ```
-        fix: correct calculation error in payment processing
+    **_Session Identifier Requirement:_**
+    * **_To ensure full traceability, every commit subject line MUST end with a session identifier tag._**
+    * **_Format:_** `(<S-GlobalNo>-<PRJ>-<C-ConvNo>-<Date>-<CommitSeqNo>)`
+    * **_Example Subject Line:_** `feat(auth): add user registration endpoint (S0015-MAF-C01-20250623-1)`
+    * **_Commit Counter:_** _To manage the `[CommitSeqNo]`, a `Commit Counter` must be maintained in the header of the relevant project's `llm_assisted_development_log.md` for the current conversation._
 
-        The discount was being applied twice. This commit corrects
-        the logic to apply it only once.
-        Closes #123
-        ```
     **_Guideline for LLM-Generated Commit Messages_**
-
-    **_When an LLM generates a multi-line commit message to be executed directly in a command-line terminal, it must be formatted using multiple `-m` flags to avoid shell parsing errors. Pasting a single string with newlines is not a reliable method._**
-
-    * **_The **first** `-m` flag is used for the commit **subject**._**
-    * **_Each **subsequent** `-m` flag is used for a **new paragraph or bullet point** in the commit **body**._**
-
-    **_Correct Command-Line Execution:_**
-    ```bash
-    git commit -m "feat: add user registration endpoint" -m "Implement the API endpoint for new user registration." -m "Includes input validation and password hashing."
-    ```
-
-    **_Incorrect Format (for direct terminal pasting):_**
-    ```bash
-    # This format will cause errors if pasted directly into the command line.
-    # It is only suitable for use when Git opens a separate text editor.
-
-    git commit -m "feat: add user registration endpoint
-
-    Implement the API endpoint for new user registration.
-    Includes input validation and password hashing."
-    ```
+    * When an LLM generates a multi-line commit message to be executed directly in a command-line terminal, it must be formatted using multiple `-m` flags to avoid shell parsing errors.
+    * The **first** `-m` flag is used for the commit **subject**.
+    * Each **subsequent** `-m` flag is used for a **new paragraph or bullet point** in the commit **body**.
+    * **Correct Command-Line Execution:**
+        ```bash
+        git commit -m "feat(auth): add endpoint (S0015-MAF-C01-20250623-1)" -m "Implement the API endpoint for new user registration." -m "Includes input validation and password hashing."
+        ```
 * **Lint and Test Before Committing:** Ensure your code lints, passes type checks, and passes relevant tests before committing (ideally automated with pre-commit hooks).
 
 ### 3. Pull Requests (PRs) / Merge Requests (MRs)

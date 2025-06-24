@@ -1,131 +1,54 @@
 # Project Lifecycle Guidelines
 
-This document provides guidelines for managing projects within the `python_workspace`. It covers initiating new projects, potentially migrating existing ones, and considerations for project completion and maintenance phases.
+## 1. Introduction & Philosophy
 
-Refer to [`standards.md`](python_workspace/documentation/standards.md:1) for detailed coding standards, directory structures, and Git workflow, which apply to all projects.
+This document defines the standard lifecycle for all projects within the workspace. The goal is to provide a clear, consistent, and repeatable process for managing projects from conception and setup through active development to final completion and maintenance.
 
-## I. Initiating a New Project
+This lifecycle is designed for a multi-project environment where each project is a self-contained, version-controlled entity. Adherence to these phases ensures that all projects are structured uniformly, making them easier to manage, maintain, and hand over between developers or LLM assistants.
 
-When starting a new project within `python_workspace/projects/`:
+All phases must be executed in accordance with the rules defined in the `standards.md` and `llm_interaction_rules.md` documents.
 
-1.  **Define Project Scope and Goals:**
-    *   Clearly articulate the objectives, features, and deliverables of the new project.
-    *   Consider if any components can leverage or should be added to `shared_libs/`.
+## 2. Phase 1: Project Conception & Setup
 
-2.  **Create Project Directory:**
-    *   Under `python_workspace/projects/`, create a new directory for your project.
-    *   Use `snake_case` for the directory name (e.g., `my_new_data_analyzer`).
+This is the most critical phase, establishing a solid foundation for the project.
 
-3.  **Establish Standard Internal Structure:**
-    *   Inside your new project directory, create the standard internal structure:
-        ```
-        [project_name]/
-        ├── src/
-        │   ├── __init__.py
-        │   └── main.py           # Main entry point
-        ├── tests/
-        │   └── __init__.py
-        ├── logs/                 # For project-specific log files
-        ├── data/                 # (Optional) For project-specific data files
-        ├── environment.yml       # Conda environment definition
-        ├── config.json           # Project configuration (gitignored if sensitive)
-        ├── config.template.json  # Template for config.json
-        └── README.md             # Project-specific README
-        ```
-    *   The LLM assistant can be tasked with creating these empty files and directories.
+1.  **Define Scope and Goals:** Clearly articulate the project's objectives, key features, and deliverables before any work begins.
+2.  **Create Project Directory:** Create a new, dedicated directory for the project in the appropriate category (e.g., `./03_projects/python/[project_name]/`). The project directory name must use `snake_case`.
+3.  **Establish Standard Internal Structure:** Immediately populate the new directory with the standard internal structure:
+    * `src/`
+    * `docs/`
+    * `logs/`
+4.  **Add Foundational Files:** Create the following essential files in the project's root directory:
+    * A comprehensive project-specific `README.md`.
+    * A `LICENSE` file (e.g., MIT License).
+    * A `.gitignore` file, based on the standard template.
+    * Utility scripts (`generate_project_manifest.ps1`, `run_manifest_generator.bat`).
+5.  **Initialize Git Repository:**
+    * Initialize a new Git repository in the project root (`git init -b main`).
+    * Add all foundational files (`git add .`).
+    * Make the initial commit using the standard message format defined in `standards.md`, including the session identifier tag. Example: `feat: Initial commit of the [project_name] project (S0016-PRJ-C01-20250624-1)`.
+6.  **Create Remote Repository:** Create a corresponding public repository on GitHub and push the initial commit.
+7.  **Create Initial Logs:** Populate the `./logs/` directory by creating the project's first `llm_assisted_development_log.md`, `user_progress_log.md`, and `sessions.md` files, following the formats defined in `logging_procedures_guidelines.md`.
 
-4.  **Create Conda Environment (`environment.yml`):**
-    *   Define the Conda environment in `[project_name]/environment.yml`.
-    *   Specify the Python version (e.g., 3.10, 3.11, or as appropriate).
-    *   List all necessary base and project-specific dependencies (e.g., `pandas`, `requests`, `mypy`, `flake8`, `black`).
-    *   Example:
-        ```yaml
-        name: my_new_project_env
-        channels:
-          - conda-forge
-          - defaults
-        dependencies:
-          - python=3.11
-          - pip
-          - pandas
-          - mypy
-          - flake8
-          - black
-          # - other_dependencies
-          # - pip:
-          #   - pip_only_package
-        ```
-    *   Create and activate the environment:
-        ```bash
-        conda env create -f environment.yml
-        conda activate my_new_project_env
-        ```
+## 3. Phase 2: Iterative Development
 
-5.  **Configuration (`config.json` and `config.template.json`):**
-    *   Identify all configuration parameters needed for the project (e.g., API keys, file paths, thresholds).
-    *   Create `config.template.json` with placeholders for sensitive values and reasonable defaults for non-sensitive ones.
-    *   Instruct the user to create their `config.json` from this template and populate it. Ensure `projects/*/config.json` is in the root `.gitignore`.
+This phase constitutes the day-to-day work of building the project.
 
-6.  **Project-Specific `README.md`:**
-    *   Write a comprehensive `README.md` for the project. It should include:
-        *   Purpose and goals of the project.
-        *   Setup instructions:
-            *   How to create and activate the Conda environment.
-            *   How to prepare `config.json` from `config.template.json`.
-            *   Any other prerequisite setup steps.
-        *   How to run the main script(s) or use the project.
-        *   Brief overview of its internal structure if helpful.
+1.  **Branching:** All new work (features, bug fixes) must be done in separate branches, following the Git strategy outlined in `standards.md` (e.g., `feature/...`, `fix/...`).
+2.  **Coding:** All code must adhere strictly to the coding standards in `standards.md` (PEP 8, type hints, docstrings, etc.).
+3.  **Committing:** Make small, atomic commits with clear messages that follow the Conventional Commits format, including the session identifier tag.
+4.  **Pull Requests (PRs):** When a feature or fix is complete, open a Pull Request to merge the branch into `main`. The PR must have a clear description. This serves as a crucial review step, even for a solo developer.
 
-7.  **Initial Logging Setup:**
-    *   In the project's main entry point (e.g., `src/main.py`), import and use the `setup_logging` function from `shared_libs.custom_logger`.
-    *   Configure it to write logs to the project's `logs/` directory.
+## 4. Phase 3: LLM Session Management
 
-8.  **Initial Git Commit for New Project:**
-    *   Once the basic structure, environment file, README, and configuration templates are in place, make an initial Git commit for this new project.
-    *   Example commit message: `feat([project_name]): initialize project structure and base configuration`
+Development is conducted in discrete, logged conversations with LLM assistants.
 
-9.  **Update Development Logs:**
-    *   Make an entry in `documentation/llm_assisted_development_log.md` noting the initiation of the new project.
+1.  **Session Initiation (Takeover):** A new development conversation begins with the Takeover procedure. A `TO_...md` file is created in `./logs/`, and new log entries are created with a new project-specific conversation number (e.g., `C02`).
+2.  **Diligent Logging:** All significant actions, decisions, and insights during the conversation must be logged according to `logging_procedures_guidelines.md`.
+3.  **Session Conclusion (Handover):** When a block of work is complete or the context limit is reached, the session is formally concluded using the Handover procedure. A `HO_...md` file is created in `./logs/`, and the session logs are finalized. A Git commit is made to save the state of the work done during the session.
 
-## II. Migrating an Existing Project (Considerations)
+## 5. Phase 4: Completion and Maintenance
 
-If you have an existing project that you wish to integrate into this `python_workspace` and align with its standards:
-
-1.  **Assess Compatibility:**
-    *   Review the existing project against the standards in `documentation/standards.md`. Identify areas needing modification (directory structure, naming, coding style, dependency management, logging).
-2.  **Plan Migration Steps:**
-    *   Create a new project directory under `python_workspace/projects/`.
-    *   Gradually refactor and move code into the standard structure.
-    *   Create an `environment.yml` file, trying to match dependencies.
-    *   Adapt configuration to use `config.json` and `config.template.json`.
-    *   Integrate shared logging.
-    *   Write a new project-specific `README.md`.
-3.  **Version Control:** Consider if the existing project has its own Git history. You might:
-    *   Start fresh with Git history within this monorepo structure.
-    *   Attempt more complex Git strategies like subtree merges if preserving history is critical (this is advanced).
-4.  **Iterative Approach:** Migration can be done iteratively. Prioritize aligning with the core structure and dependency management first.
-
-## III. Project Completion ("Finished" State)
-
-1.  **Definition of Done:** Clearly define what constitutes "completion" for a project or a major phase. This should align with the initial project goals.
-2.  **Final Testing and Review:** Ensure all features are working as expected, tests pass, and documentation is up-to-date.
-3.  **Logging Completion:**
-    *   Make an entry in `documentation/llm_assisted_development_log.md` marking the project (or phase) as complete, along with the date and relevant Git commit.
-    *   Example: `milestone([project_name]): Version 1.0 completed and deployed. All core features implemented.`
-4.  **Tagging (Optional but Recommended):**
-    *   Create a Git tag for the "completed" version (e.g., `git tag [project_name]-v1.0.0`).
-
-## IV. Maintenance Phase (Post-Completion)
-
-"Completed" rarely means no more changes. For maintenance (bug fixes) or subsequent minor enhancements:
-
-1.  **Branching:**
-    *   Always create new branches from the `main` branch (or the relevant release tag) for fixes or small features.
-    *   Use `fix/[issue-description]` or `enhancement/[feature-description]` naming conventions.
-2.  **Testing:** Rigorously test any changes, especially bug fixes, to ensure they resolve the issue without introducing regressions.
-3.  **Pull Requests:** All maintenance changes should go through the standard Pull Request process.
-4.  **Logging:** Document these changes in `documentation/llm_assisted_development_log.md`.
-5.  **Versioning:** If applicable, increment patch versions for bug fixes (e.g., v1.0.1) or minor versions for small, backward-compatible enhancements (e.g., v1.1.0).
-
----
-These guidelines aim to provide a consistent approach to managing projects throughout their lifecycle within this workspace.
+1.  **Defining Completion:** A project or a major version is considered "complete" when all its defined goals and features have been implemented, tested, and documented.
+2.  **Final Commit and Tagging:** Make a final commit for the release version. It is highly recommended to create a Git tag for this version (e.g., `git tag v1.0.0`).
+3.  **Maintenance:** Post-completion work (bug fixes, minor enhancements) follows the same development lifecycle: create a new branch from `main`, perform the work, and merge via a Pull Request. These changes should increment the version number according to Semantic Versioning (e.g., `v1.0.1` for a bug fix).

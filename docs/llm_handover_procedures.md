@@ -75,13 +75,18 @@ Compile a comprehensive **Draft Handover Report**. This report should include:
 
 1.  **Update `history/progress/sessions.md`:** Append the approved session summary to this file.
 2.  **Create Official `HandOver` File:**
-    *   Create the `HandOver` file in the `python_workspace/history/handovers/` directory.
-    *   **File Name Format:** `HandOver_[HandoverPrepDateYYYYMMDD]_[YourMode]_[YourLLMModel]_[YourTakeoverDateYYYYMMDD].md`
-        *   `[HandoverPrepDateYYYYMMDD]`: The current date (when the handover is being prepared).
-        *   `[YourMode]`: Your LLM's mode.
-        *   `[YourLLMModel]`: Your LLM's model name.
-        *   `[YourTakeoverDateYYYYMMDD]`: The date you (the outgoing LLM) originally took over the project.
-    *   **Content:** The approved Draft Handover Report, including the detailed Git Activity Summary.
+    * Create the `HandOver` file in the project-specific `logs/` directory. **Note: The old `history/handovers/` path is deprecated.**
+    * **File Name Format:** Use the following naming convention:
+        `HO_[PRJ]_[S-GlobalNo]_[C-ConvNo]_[HandoverDate]_[Mode]_[Model]_[TakeoverDate].md`
+        * `HO_`: A static prefix for "HandOver".
+        * `[PRJ]`: A short project abbreviation (e.g., `MAF`, `DS`).
+        * `[S-GlobalNo]`: The 5-digit global session number (e.g., `S0015`).
+        * `[C-ConvNo]`: The 2-digit project-specific conversation number (e.g., `C01`).
+        * `[HandoverDate]`: The current date of handover preparation (YYYYMMDD).
+        * `[Mode]`: Your LLM's mode.
+        * `[Model]`: Your LLM's model name.
+        * `[TakeoverDate]`: The date you (the outgoing LLM) originally took over the project (YYYYMMDD).
+    * **Content:** The approved Draft Handover Report, including the detailed Git Activity Summary.
 3.  **Update Log Files (`llm_assisted_development_log.md` and `user_progress_log.md`):**
     *   Append a final session-closing entry to both log files.
     *   In `llm_assisted_development_log.md`:

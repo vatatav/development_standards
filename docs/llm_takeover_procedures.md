@@ -36,24 +36,34 @@ Upon receiving the initial prompt from the user, you must perform the following 
     * Based on your analysis, outline how you plan to proceed and what your initial steps will be.
     * Present this plan to the user for discussion and approval.
 
-6.  **Create "TakeOver" File and Log Entries:**
-    * Once the user approves your summary and plan, you will create a `TakeOver` file to formally confirm the handover, following the naming convention: `TakeOver_[TakeoverDateYYYYMMDD]_[YourMode]_[YourLLMModel].md`.
-    * This file should be saved in the `history/takeovers/` folder. Its content should be the summary and plan we agreed upon.
-    * At the same time, you must make the initial log entries in `llm_assisted_development_log.md` and `user_progress_log.md` for the takeover session, as specified in `logging_procedures_guidelines.md`.
-    * Ensure that both the `TakeOver` file and the initial log entries are accurate, complete, and adhere to the project's documentation and logging standards.
+6. Create "TakeOver" File and Log Entries
+
+* Once the user approves your summary and plan, you will create a `TakeOver` file to formally confirm the handover.
+* **The file should be saved in the project-specific `./logs/` directory.**
+* **Use the following naming convention:**
+    `TO_[PRJ]_[S-GlobalNo]_[C-ConvNo]_[TakeoverDate]_[Mode]_[Model].md`
+    * `TO_`: A static prefix for "TakeOver".
+    * `[PRJ]`: A short project abbreviation (e.g., `MAF`, `DS`).
+    * `[S-GlobalNo]`: The 5-digit global session number (e.g., `S0016`).
+    * `[C-ConvNo]`: The 2-digit project-specific conversation number (e.g., `C01`).
+    * `[TakeoverDate]`: The current date of takeover (YYYYMMDD).
+    * `[Mode]`: Your LLM's mode.
+    * `[Model]`: Your LLM's model name.
+* The content of this file should be the summary and plan we agreed upon.
+* At the same time, you must make the initial log entries in `llm_assisted_development_log.md` and `user_progress_log.md` for the takeover session, as specified in `logging_procedures_guidelines.md`.
+* Ensure that both the `TakeOver` file and the initial log entries are accurate, complete, and adhere to the project's documentation and logging standards.
+
 ## 3. Required Reading to Understand the Project
 
-To fully understand the project, you must review the following resources:
+To fully understand the project you are taking over, you must review the following resources:
 
-1.  **Core Project Documentation:** All files within the `documentation/` folder. Pay special attention to:
+1.  **The `development_standards` Project:** This is the most critical source of information. You must be familiar with all documents within it, especially:
     * `standards.md`
-    * `project_lifecycle_guidelines.md`
-    * `logging_procedures_guidelines.md`
-    * `llm_handover_procedures.md`
-    * `history/progress/user_profile_for_llm_assistance.md`
-2.  **Project and User Development History:** All files within the `history/progress/` folder.
-3.  **Previous LLM's Handover Report:** The handover file located in the `history/handovers/` folder, as specified by the user in the initial prompt.
-
+    * All files in the `docs/` subdirectory (`llm_interaction_rules.md`, `logging_procedures_guidelines.md`, etc.).
+2.  **The Global User Profile:** The `user_profile_for_llm_assistance.md` file located in the root of the workspace.
+3.  **Project-Specific Logs:** All files within the `./logs/` directory of the current project you are taking over.
+4.  **Previous LLM's Handover Report:** The `HO_...md` file located in the project's `./logs/` directory, as specified by the user in the initial prompt.
+5.  **Additional References:** Ensure familiarity with any supplementary project-specific documentation or guidelines provided by the user.
 ## 4. Your Workflow and Future Handover Responsibilities
 
 * **Adherence to Standards:** You are expected to strictly adhere to all standards and procedures defined in the documentation.

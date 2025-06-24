@@ -1,196 +1,137 @@
-# LLM-Assisted Development and User Progress Logging Guidelines
+# Logging Procedures and Guidelines
 
 ## 1. Introduction
 
-This document outlines the procedures and conventions for maintaining two critical log files:
-* `llm_assisted_development_log.md`: Tracks the development activities, LLM interactions, and decisions made during the software development process.
-* `user_progress_log.md`: Records the user's learning journey, insights gained, challenges faced, and solutions implemented while working with LLMs.
+This document outlines the mandatory procedures for maintaining development logs across the entire workspace. The goal is to create a clear, consistent, and traceable history of both high-level strategic decisions and project-specific development activities.
 
-Adherence to these guidelines is crucial for ensuring consistency, traceability, and effective handover between different LLM agents or human reviewers involved in this project.
+The logging system is built on a **dual-level hierarchy**:
+* **Global Logs:** A master set of logs that tracks the overarching history of all sessions and user progress across all projects.
+* **Project-Specific Logs:** Each independent project maintains its own complete set of logs, detailing its unique development lifecycle.
 
-## 2. Log File Location
+Adherence to these standards is critical for enabling smooth handovers between LLM assistants and for maintaining a comprehensive record of the workspace's evolution.
 
-Both log files are located in the `history/progress/` directory.
+## 2. Core Principles
 
-## 3. General Log Structure
+* **Dual-Level Traceability:** Every action must be traceable from both a project-level and a global-level perspective. The global logs provide the "big picture" of the user's journey, while project logs provide the detailed technical history.
+* **Linked History:** The standardized `ItemID` format is the key that links granular project work back to a specific global session. This ensures that the context for any given change is never lost.
+* **Unambiguous Identification:** All log files, session entries, and log items must follow the strict naming and formatting conventions outlined in this document to ensure they are unique and easily identifiable.
+* **Pristine History:** Log files must not be polluted with extraneous information. They are a formal record of development, not a scratchpad.
 
-* **Session-Based:** Logs are organized into sessions, where each session represents a distinct period of interaction or work.
-* **Chronological Order:** Sessions within each log file **must** be ordered chronologically based on the `Session Start` date. The newest sessions are added at the end of the file.
-* **Visual Separator:** Each new session must begin with a visual separator of 80 asterisks:
+## 3. Log File and Directory Structure
+
+The logging system operates on a two-level hierarchy to ensure both a high-level overview and granular project detail.
+
+### 3.1. Global Log Directory
+
+A master log directory exists at the top level of the workspace, structured as:
+* `./00_universe_meta/logs/`
+
+This directory contains the global `sessions.md` file, which tracks every session across all projects, as well as the master `llm_assisted_development_log.md` and `user_progress_log.md` containing the complete, unabridged history.
+
+### 3.2. Project-Specific Log Directory
+
+Each independent project contains its own `logs/` directory at its root.
+* Example path from within a project: `./logs/`
+
+This directory holds all logs and process documents pertinent **only** to that project:
+* `llm_assisted_development_log.md`
+* `user_progress_log.md`
+* `sessions.md`
+* All `HO_*.md` (HandOver) and `TO_*.md` (TakeOver) files.
+
+## 4. `sessions.md` Management
+
+The `sessions.md` file is a high-level summary of work sessions. A distinction is made between the global session log and project-specific session logs.
+
+### 4.1. Global `sessions.md` File
+
+Located in the global log directory (`./00_universe_meta/logs/`), this file provides a sequential, chronological record of all work sessions.
+* **Entry Format:** Each entry is sequentially numbered and uses the global session ID.
     ```
-    ********************************************************************************
+    <SeqNo>. S[GlobalNo]-ADL-[StartDate]
+    Date Interval: [Start Time] - [End Time]
+    Reason: [A high-level summary of the session's purpose and outcome.]
+    Date added to log: [Date of entry]
+    Mode: [LLM Mode]
+    LLM Model: [LLM Model Name]
+    Source: "[Conversation Context] ([SourceLogFileName].md)"
+    Total Items in Session: [Total item count from the global log]
     ```
+* **Special Case:** In a session where multiple new projects are created, the global log will contain one main entry for the overall session, followed by separate, subsequent entries marking the "birth" of each project.
 
-### 3.5 Initial Session Logging Procedure
+### 4.2. Project-Specific `sessions.md` File
 
-To ensure consistency from the very beginning of a session, the following procedure is mandatory:
-
-1.  **Determine Session Number:** At the start of a new session, the assisting LLM must first consult `history/progress/sessions.md` to determine the correct sequential session number (e.g., S10, S11).
-2.  **Agree on Session Goals:** The LLM and user will discuss and agree upon the primary goals for the session.
-3.  **Propose Initial Log Entries:** Immediately after the goals are set, the LLM's **first action** must be to formulate the initial, corresponding session start entries (for both `llm_assisted_development_log.md` and `user_progress_log.md`) according to the format specified in Section 4.
-4.  **Obtain User Approval:** The LLM must present these proposed log entries to the user and receive explicit approval before proceeding with any other development tasks.
-
-## 4. Session Header Fields
-
-Each session must start with the following header fields:
-
-* `**S<XX>-[LOG_PREFIX]-YYYYMMDD Session Start:** YYYY.MM.DD HH:MM`
-    * `S<XX>` is the sequential session number (e.g., S10) determined by consulting `history/progress/sessions.md`.
-    *   `[LOG_PREFIX]` is `ADL` for `llm_assisted_development_log.md` and `UPL` for `user_progress_log.md`.
-    *   `YYYYMMDD` in the label should match the `Session Start` date.
-    *   Example: `**ADL-20250507 Session Start:** 2025.05.07`
-*   `**Reason:** [Brief description of the session's primary goal or trigger]`
-*   `**Date added to log:** YYYY.MM.DD` (The date when this session's information was actually recorded)
-*   `**Mode:** [Interaction mode, e.g., CodeLLM - Chat, Roo Code - MicroManager, VSCode Extension Agent, User Independent Work]`
-*   `**LLM Model:** [Specific LLM model used, e.g., Gemini 2.5 Pro, gemini-2.5-pro-preview, Gemini Pro, N/A if user independent]`
-*   `**Source:** [Origin of the information for this session, e.g., Preparation_of_first_prompt.txt, roo_code_LLM.md, Ongoing Conversation, User Notes]`
-
-## 5. ItemID Structure (Within Each Session)
-
-Each distinct piece of work, interaction, or learning insight within a session is recorded as an Item.
-
-*   `**ItemID:** [LOG_PREFIX]-YYYYMMDD-NNN`
-    *   `[LOG_PREFIX]` is `ADL` or `UPL`.
-    *   `YYYYMMDD` matches the `Session Start` date.
-    *   `NNN` is a 3-digit sequential number for items within that session (e.g., 001, 002).
-*   `**Date Interval:** YYYY.MM.DD HH:MM - YYYY.MM.DD HH:MM` (veya tek bir zaman noktası için `YYYY.MM.DD HH:MM`, ya da saatler mevcut değilse/ilgili değilse `YYYY.MM.DD - YYYY.MM.DD`)
-    *   Reflects the actual start and end dates and times (when available and relevant) of the activity described in this ItemID.
-    *   This can span multiple days but should fall within the overall session's timeframe.
-    *   For new entries, if the interaction or task has a discernible start and end time (HH:MM), these should be included.
-    *   If only a single timestamp is relevant (e.g., a specific event), use `YYYY.MM.DD HH:MM`.
-    *   If specific times are not available (e.g., for some historical data) or if an item genuinely spans full days without precise start/end times for the logged activity itself, the `YYYY.MM.DD - YYYY.MM.DD` format can be used.
-    *   The goal is to provide as much temporal precision as is practical and useful for understanding the context of the logged item.
-
-### 5.1. `llm_assisted_development_log.md` ItemID Specific Fields:
-
-*   `**Phase:** [Descriptive name for the development phase or sub-task]`
-*   `**LLM Interactions - Actions:**`
-    *   Bullet points detailing actions taken, advice given, or code generated by the LLM.
-    *   **Perspective:** Must be written from the perspective of the LLM active during that session (e.g., "I suggested...", "I generated the following code...").
-*   `**User Insights Recorded:** [Observations about the user's intentions, methodology, or specific requests that informed the LLM's actions]`
-*   `**Related User Progress Log Entry:** UPL-YYYYMMDD-NNN` (Link to the corresponding ItemID in `user_progress_log.md`)
-
-### 5.2. `user_progress_log.md` ItemID Specific Fields:
-
-*   `**Topic:** [Descriptive topic of the user's learning, activity, or reflection]`
-*   `**Insights & Learnings:**`
-    *   Bullet points detailing what the user learned or understood.
-*   `**Challenges & Solutions:**`
-    *   Bullet points describing any challenges encountered and how they were (or are planned to be) addressed.
-*   `**Related Development Log Entry:** ADL-YYYYMMDD-NNN` (Link to the corresponding ItemID in `llm_assisted_development_log.md`)
-
-### 5.3. Item Separator
-
-Each ItemID block (from `**ItemID:**` to its related log entry link) must be followed by a horizontal rule:
-```
----
-```
-
-## 6. Session End Marker
-
-Each session must conclude with the following:
-
-*   `**[LOG_PREFIX]-YYYYMMDD Session End:** YYYY.MM.DD`
-    *   `YYYYMMDD` in the label should match the `Session Start` date.
-    *   The date is the end date of the session.
-*   `**Total Items in Session:** [Number]` (Count of ItemIDs within this session)
-*   `**Session Highlights:**`
-    *   Bullet points summarizing the key achievements, decisions, or learnings from the session.
-*   A final horizontal rule after the highlights:
+Located in each project's `./logs/` directory, this file tracks only the conversations relevant to that project.
+* **Entry Format:** Each entry is sequentially numbered and uses the full `S...-C...` identifier.
     ```
-    ---
+    <ProjSeqNo>. S[GlobalNo]-[PRJ]-[C-ConvNo]-[Date]
+    Date Interval: [Start Time] - [End Time]
+    Reason: [A summary of the session's purpose specific to this project.]
+    Date added to log: [Date of entry]
+    Mode: [LLM Mode]
+    LLM Model: [LLM Model Name]
+    Source: "[Conversation Context] ([SourceLogFileName].md)"
+    Total Items in Session: [Total item count from this project's log]
     ```
 
-## 7. Writing Style and Perspective
+## 5. Log Entry and ItemID Format
 
-*   **Clarity and Conciseness:** Be clear and to the point.
-*   **Granularity:** Break down work into reasonably small, logical ItemIDs.
-*   **LLM Perspective (for ADL):** As noted above, `llm_assisted_development_log.md` entries under "LLM Interactions - Actions" should be from the viewpoint of the LLM that performed the actions.
-*   **User Perspective (for UPL):** `user_progress_log.md` entries should reflect the user's experiences and insights.
-*   **Accuracy:** Ensure dates, model names, sources, and links are accurate.
+Each entry in a project-specific `llm_assisted_development_log.md` or `user_progress_log.md` must adhere to the following strict format.
 
-## 8. Example Snippet (Illustrative)
+### 5.1. Log Entry Header
 
-### `llm_assisted_development_log.md` (Partial Session Example)
+Every new entry must begin with a separator and a two-line header that provides global and project-specific context.
+
+**Format:**
+Total Session No: S[GlobalNo]
+[PRJ]-[C-ConvNo] Session Start: [YYYY.MM.DD HH:MM]
+* `[GlobalNo]`: The 5-digit global session number (e.g., `S0015`).
+* `[PRJ]`: The project abbreviation (e.g., `MAF`).
+* `[C-ConvNo]`: The 2-digit project-specific conversation number (e.g., `C01`).
+
+### 5.2. ItemID Naming Convention
+
+Every log entry must have a unique `ItemID`. This ID is the key to tracing work across the workspace.
+
+**Format:** `[PRJ]-[C-ConvNo]-[LogType]-[Date]-[SeqNo]-[S-GlobalNo]`
+
+**Breakdown:**
+* `[PRJ]`: Project abbreviation (e.g., `MAF`, `DS`).
+* `[C-ConvNo]`: Project-specific conversation number (e.g., `C01`).
+* `[LogType]`: `ADL` for the development log, `UPL` for the user progress log.
+* `[Date]`: The date of the entry in YYYYMMDD format.
+* `[SeqNo]`: A 3-digit sequential number for the item within that day's log (e.g., `001`).
+* `[S-GlobalNo]`: The 5-digit global session number (e.g., `S0015`), repeated at the end for easy cross-referencing.
+
+**Example:** `MAF-C01-ADL-20250623-001-S0015`
+
+## 6. Handover, Takeover, and Session Finalization
+
+The end of a conversation or session is a formal process that must be logged correctly.
+
+* **Handover:** The handover process concludes with the creation of the `HO_[PRJ]...md` file, which must be saved in the project's `./logs/` directory. The LLM must also add a final `Project Handover Finalization` entry to the project's logs.
+* **Takeover:** The takeover process begins with the creation of the `TO_[PRJ]...md` file in the project's `./logs/` directory and the creation of the first log entries for the new conversation.
+* **Session End:** The final action in any log file for a given conversation is the `Session End` marker, which must include the total count of `ItemID`s created during that conversation.
+
+## 7. Complete Log Entry Example
+
+The following is a complete and correct example of a single entry in a project-specific `llm_assisted_development_log.md`.
 
 ```markdown
 ********************************************************************************
-**ADL-20250701 Session Start:** 2025.07.01
-**Reason:** User requested to implement a new feature X.
-**Date added to log:** 2025.07.03
-**Mode:** VSCode Extension Agent
-**LLM Model:** Gemini Pro
-**Source:** Ongoing Conversation
+**Total Session No: S0015**
+**MAF-C01 Session Start:** 2025.06.23 18:00
+**Mode:** Gemini Web Interface
+**LLM Model:** Gemini 2.5 Pro (preview)
+**Source:** S0015-MAF-C01-20250623_Gemini-Web-Interface_Gemini-2.5-Pro-preview.md
 
-**ItemID:** ADL-20250701-001
-**Date Interval:** 2025.07.01 - 2025.07.01
-**Phase:** Understanding Feature X Requirements
+**ItemID:** MAF-C01-ADL-20250623-001-S0015
+**Date:** 2025.06.23
+**Phase:** Feature Development
 **LLM Interactions - Actions:**
-*   I asked the user to clarify the input parameters for Feature X.
-*   I confirmed my understanding of the expected output format.
-**User Insights Recorded:** User wants Feature X to integrate with the existing Module Y.
-**Related User Progress Log Entry:** UPL-20250701-001
+* User requested the implementation of a new feature.
+* LLM analyzed the request and proposed a multi-step plan.
+* User approved the plan.
+**User Insights Recorded:** User confirmed the plan aligns with the project's long-term goals.
+**Related User Progress Log Entry:** MAF-C01-UPL-20250623-001-S0015
 ---
-
-**ItemID:** ADL-20250701-002
-**Date Interval:** 2025.07.01 - 2025.07.02
-**Phase:** Initial Implementation of Feature X
-**LLM Interactions - Actions:**
-*   I drafted the initial Python function for Feature X in `feature_x.py`.
-*   I included basic error handling as discussed.
-**User Insights Recorded:** User emphasized the need for detailed logging within the new function.
-**Related User Progress Log Entry:** UPL-20250701-002
----
-**ADL-20250701 Session End:** 2025.07.02
-**Total Items in Session:** 2
-**Session Highlights:**
-*   Clarified requirements for Feature X.
-*   Completed initial implementation of Feature X.
----
-```
-
-### `user_progress_log.md` (Partial Session Example)
-
-```markdown
-********************************************************************************
-**UPL-20250701 Session Start:** 2025.07.01
-**Reason:** User requested to implement a new feature X.
-**Date added to log:** 2025.07.03
-**Mode:** VSCode Extension Agent
-**LLM Model:** Gemini Pro
-**Source:** Ongoing Conversation
-
-**ItemID:** UPL-20250701-001
-**Date Interval:** 2025.07.01 - 2025.07.01
-**Topic:** Defining Requirements for Feature X
-**Insights & Learnings:**
-*   Learned the importance of clearly articulating all input parameters and expected outputs before development begins.
-*   Realized that discussing integration points early (e.g., with Module Y) is crucial.
-**Challenges & Solutions:**
-*   Challenge: Initially, I wasn't sure how to best describe the error conditions.
-*   Solution: Discussed with the LLM and we agreed on a set of specific error codes.
-**Related Development Log Entry:** ADL-20250701-001
----
-
-**ItemID:** UPL-20250701-002
-**Date Interval:** 2025.07.01 - 2025.07.02
-**Topic:** Reviewing and Understanding LLM-Generated Code for Feature X
-**Insights & Learnings:**
-*   Gained a better understanding of how the LLM translates requirements into Python code.
-*   Reviewed the error handling and logging mechanisms implemented by the LLM.
-**Challenges & Solutions:**
-*   Challenge: The initial draft of logging was not as detailed as I wanted.
-*   Solution: Provided feedback to the LLM to increase logging verbosity at specific points.
-**Related Development Log Entry:** ADL-20250701-002
----
-**UPL-20250701 Session End:** 2025.07.02
-**Total Items in Session:** 2
-**Session Highlights:**
-*   Successfully defined requirements for Feature X.
-*   Reviewed and understood the initial LLM-generated code for Feature X.
----
-```
-
-## 9. Maintaining the Guidelines
-
-These guidelines may evolve. Any changes should be discussed and agreed upon, and this document updated accordingly.
