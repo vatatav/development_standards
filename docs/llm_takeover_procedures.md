@@ -55,15 +55,18 @@ Upon receiving the initial prompt from the user, you must perform the following 
 
 ## 3. Required Reading to Understand the Project
 
-To fully understand the project you are taking over, you must review the following resources:
+To fully understand the project you are taking over, you must review the following resources in order:
 
-1.  **The `development_standards` Project:** This is the most critical source of information. You must be familiar with all documents within it, especially:
+1.  **The `takeover_context.md` file:** This file, provided by the user, contains the specific context for this session, including the handover file name and project manifest.
+2.  **The `development_standards` Project:** This is the most critical source of information. You must be familiar with **all documents** within it, especially:
     * `standards.md`
-    * All files in the `docs/` subdirectory (`llm_interaction_rules.md`, `logging_procedures_guidelines.md`, etc.).
-2.  **The Global User Profile:** The `user_profile_for_llm_assistance.md` file located in the root of the workspace.
-3.  **Project-Specific Logs:** All files within the `./logs/` directory of the current project you are taking over.
-4.  **Previous LLM's Handover Report:** The `HO_...md` file located in the project's `./logs/` directory, as specified by the user in the initial prompt.
-5.  **Additional References:** Ensure familiarity with any supplementary project-specific documentation or guidelines provided by the user.
+    * `llm_interaction_rules.md`
+    * `logging_procedures_guidelines.md`
+    * `project_lifecycle_guidelines.md`
+3.  **The Global User Profile:** The `user_profile_for_llm_assistance.md` file located in the workspace root.
+4.  **The Previous LLM's Handover Report:** The `HO_...md` file located in the current project's `./logs/` directory. The specific filename will be in your `takeover_context.md`.
+5.  **Additional References:** Ensure familiarity with any supplementary project-specific documentation or guidelines provided by the user
+
 ## 4. Your Workflow and Future Handover Responsibilities
 
 * **Adherence to Standards:** You are expected to strictly adhere to all standards and procedures defined in the documentation.

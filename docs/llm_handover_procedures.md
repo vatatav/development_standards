@@ -35,13 +35,7 @@ Compile a comprehensive **Draft Handover Report**. This report should include:
     *   Merges performed.
     *   Any significant rebasing or rollback operations (if applicable and noteworthy, along with reasons).
 6.  **The Very Next Immediate Planned Step(s) You Were About to Undertake or Propose:** What was the immediate next piece of work?
-7.  **Pointers to Crucial Documentation/Standard Files:** Remind the user/next LLM about:
-    *   `documentation/standards.md`
-    *   `documentation/llm_takeover_procedures.md` (for the incoming LLM)
-    *   `documentation/project_lifecycle_guidelines.md`
-    *   `documentation/logging_procedures_guidelines.md`
-    *   `history/progress/user_profile_for_llm_assistance.md`
-    *   The main project `README.md` and any project-specific `README.md` files.
+7.  **Pointers to Crucial Documentation/Standard Files:** Remind the user/next LLM that they are required to be familiar with all procedural documents within the `development_standards` project, as well as the main project `README.md` and the `user_profile_for_llm_assistance.md` file in the workspace root. **Crucially, explicitly point the incoming LLM to the `llm_takeover_procedures.md` document.**
 8.  **Your Role During Tenure:** Briefly describe the role you fulfilled.
 9.  **Specific Instructions/Context for the New LLM (Optional but helpful):** Any nuances, unresolved discussions, or specific areas the new LLM should pay attention to.
 10. **Review and Suggest User Profile Updates (Optional):**
@@ -72,8 +66,7 @@ Compile a comprehensive **Draft Handover Report**. This report should include:
 ### Step 6: Handle User's Decision
 
 #### A. If User APPROVES Handover:
-
-1.  **Update `history/progress/sessions.md`:** Append the approved session summary to this file.
+1.  **Update `sessions.md`:** Append the approved session summary to the project-specific `./logs/sessions.md` file and, if applicable, to the global `sessions.md` file in the `./00_universe_meta/logs/` directory.
 2.  **Create Official `HandOver` File:**
     * Create the `HandOver` file in the project-specific `logs/` directory. **Note: The old `history/handovers/` path is deprecated.**
     * **File Name Format:** Use the following naming convention:
