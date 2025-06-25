@@ -42,3 +42,42 @@ My role in this session (S0015) was as a **Systems Architect**, assisting the us
 **9. Specific Instructions/Context for the New LLM**
 * **You are working on the rulebook.** Be extremely careful and precise. Any changes you make to these documents will directly impact how you and other assistants are expected to behave.
 * **Verify your changes.** When asked to modify a document, double-check that your changes align with the user's request and do not contradict other existing rules. Always provide the full, final text of a modified section for user approval, as per `llm_interaction_rules.md`.
+
+**10. Finalizing Commit Details:**
+(base) PS D:\mca_universe\02_methodologies\development_standards> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   docs/llm_handover_procedures.md
+        modified:   docs/llm_takeover_procedures.md
+        modified:   docs/logging_procedures_guidelines.md
+        modified:   logs/llm_assisted_development_log.md
+        modified:   logs/sessions.md
+        modified:   logs/user_progress_log.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        logs/TO_DS_S0016_C02_20250625_Gemini-Web-Interface_Gemini-2.5-Pro-preview.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) PS D:\mca_universe\02_methodologies\development_standards> git add .
+warning: in the working copy of 'docs/llm_handover_procedures.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/llm_takeover_procedures.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/logging_procedures_guidelines.md', LF will be replaced by CRLF the next time Git touches it
+(base) PS D:\mca_universe\02_methodologies\development_standards> git commit -m "docs(standards): Complete overhaul of all procedural documents (S0016-DS-C02-20250625-1)" -m "Performs a comprehensive overhaul of all core procedural documents to align with the new multi-project architecture and latest standards." -m "- Rewrites llm_handover_procedures.md and llm_takeover_procedures.md with new, project-aware filename conventions." -m "- Completely refactors logging_procedures_guidelines.md to formalize the dual-level logging system, ItemID formats, and session management." -m "- Generalizes standards.md to be platform-agnostic, separating universal principles from language-specific examples." -m "- Deprecates obsolete guides and replaces them with new, practical quickstart and prompt templates."
+[main c6a4e27] docs(standards): Complete overhaul of all procedural documents (S0016-DS-C02-20250625-1)
+ 7 files changed, 279 insertions(+), 66 deletions(-)
+ create mode 100644 logs/TO_DS_S0016_C02_20250625_Gemini-Web-Interface_Gemini-2.5-Pro-preview.md
+(base) PS D:\mca_universe\02_methodologies\development_standards> git push
+Enumerating objects: 19, done.
+Counting objects: 100% (19/19), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (11/11), 12.91 KiB | 1.29 MiB/s, done.
+Total 11 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/vatatav/development_standards
+   4437500..c6a4e27  main -> main

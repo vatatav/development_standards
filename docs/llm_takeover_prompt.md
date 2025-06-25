@@ -4,11 +4,10 @@ You are taking over an ongoing software development project. Your first task is 
 
 ## Session Information
 
-* **Session Start Date:** [YYYY.MM.DD]
-* **Mode:** [LLM_Mode]
-* **LLM Model Used:** [LLM_Model]
-* **Previous LLM's Handover File Name:** [HandOver_File_Name].md
-
+* **Session Start Date:** [2025.06.25]
+* **Mode:** [CodeLLM - Agent]
+* **LLM Model Used:** [GPT-4.1 Mini]
+* **Previous LLM's Handover File Name:** HO_DS_S0016_20250625_Gemini-Web-Interface_Gemini-2.5-Pro-preview_20250624.md
 ## Your First Steps
 
 1.  **Acknowledge this prompt.**

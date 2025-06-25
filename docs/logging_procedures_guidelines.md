@@ -107,12 +107,13 @@ This is the **Project's Diary**. Its fields are:
 
 #### `user_progress_log.md` (UPL) Specifics
 
-This is the **User's Diary**. UPL entries should only be created when a genuine learning moment occurs.
+This is the **User's Diary**. UPL entries should only be created when a genuine learning moment occurs, capturing insights that contribute to the user's growth and understanding.
 
 * **`ItemID`**: The unique identifier, matching the ADL format.
+* **`Insight Date`**: The single date (`YYYY.MM.DD`) when the insight or learning actually occurred.
 * **`Date`**: The single date (`YYYY.MM.DD`) when the insight or learning occurred.
 * **`Topic`**: A high-level title for the user's learning or insight (e.g., "Redefining the Core Philosophy of Logging").
-* **`Insights & Learnings`**: A first-person summary of the user's "Aha!" moment or new understanding. This is the core of the UPL entry.
+* **`Insights & Learnings`**: A detailed explanation of the user's key realizations or new understandings, written in the first person to reflect personal growth and insight. A first-person summary of the user's "Aha!" moment or new understanding. This is the core of the UPL entry.
 * **`Challenges & Solutions` (Optional)**: A field to document a specific problem and the thinking process that led to a solution.
 * **`Related Development Log Entry`**: The full `ItemID` of the corresponding entry in the `llm_assisted_development_log.md` file.
 
