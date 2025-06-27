@@ -1,63 +1,61 @@
-# Codebase Standards and Development Guidelines
+# Workspace Standards and Development Guidelines
 
-This document outlines the coding standards, directory structures, naming conventions, project initiation guidelines, development workflow, and Git strategy for projects within this Python workspace. Adherence to these standards is crucial for maintaining a clean, consistent, and collaborative development environment.
+This document outlines the universal standards for directory structures, naming conventions, development workflow, and Git strategy for all projects within this workspace. Adherence to these standards is crucial for maintaining a clean, consistent, and collaborative environment.
 
-## I. GENERAL CODEBASE STRUCTURE AND STANDARDS
+## I. WORKSPACE AND PROJECT STRUCTURE
 
-### 1. Main Directory Structure
+### 1. Top-Level Workspace Structure
 
-The main directory structure is as follows:
+The workspace is organized into numbered, domain-based "space" directories to ensure a clear separation of concerns. All new projects must be created within the appropriate space.
 
-```
-python_workspace/
-├── projects/
-│   └── [project_name]/   # Placeholder for individual projects
-├── shared_libs/
-│   ├── __init__.py
-│   ├── custom_logger.py
-│   └── pdf_utils.py
-├── documentation/
-│   └── standards.md      # This document
-├── .gitignore
-└── README.md             # General README for the main codebase
-```
+d:\mca_universe
 
-### 2. Project-Specific Directory Structure
+├── 00_universe_meta/
+│   └── logs/                 # Global logs for all sessions and user progress
+├── 01_hyper_space/
+│   ├── multi_clever_agents/
+│   └── most_comprehensive_approach/
+├── 02_python_space/
+│   └── [project_name]/       # For Python application projects
+├── 03_web_dev_space/
+│   └── [project_name]/       # For web application projects
+└── 99_archive/
+└── [archived_item]/      # For old projects or historical files
 
-Each project (e.g., `projects/financial_tracker/`) must have an internal structure like this:
 
-```
+### 2. Standard Project-Internal Structure
+
+Every new project, regardless of its type (code, documentation, etc.), must begin with this minimal standard internal structure.
+
 [project_name]/
-├── src/
-│   ├── __init__.py
-│   └── main.py           # Main entry point for the project
-├── tests/
-│   └── __init__.py
-├── logs/                 # Log files for this project
-├── data/                 # (Optional) For project-specific data files
-├── environment.yml       # Conda environment definition file
-├── config.json           # Project configuration file (gitignored if sensitive)
-├── config.template.json  # Template for config.json
-└── README.md             # Project-specific explanations
-```
-**Note on Archival/Historical Folders:** To keep the project workspace clean and focused on active development files, do not create additional `History` or `old` subdirectories within any project folder or the `python_workspace` root. This is a strict standard. All historical artifacts, old versions of files, or conversational logs should be stored in the dedicated `d:\AI_projects\roo_code_LLM_universe\old_files\` directory, which is outside the version-controlled workspace. Assisting LLMs should verify compliance with this standard during handovers.
+├── docs/                 # For project-specific documentation and guides
+├── logs/                 # For project-specific logs (session, progress, etc.)
+├── .gitignore
+├── LICENSE
+└── README.md             # Project-specific explanations and setup
+
+
+**Note on Project-Specific Additions:**
+* **Code-Based Projects** (e.g., Python, Web) MUST add a `src/` directory to contain all source code.
+* Projects may add other top-level directories as needed (e.g., `data/` for data files, `config/` for configuration), but these should be justified in the project's `README.md`.
 
 ### 3. Language and Naming Conventions
 
-*   **Language:** All in-code elements (variables, functions, class names), file names, and folder names must be in **English**.
-*   **Documentation:** Docstrings and comments must be in **English**.
-*   **File Naming:** Use `snake_case` for Python files and directories (e.g., `custom_logger.py`, `financial_tracker/`).
-*   **Variable Naming:** Use `snake_case` for variables and function names (e.g., `user_count`, `calculate_total()`).
-*   **Class Naming:** Use `PascalCase` (also known as `CapWords`) for class names (e.g., `FinancialTransaction`).
-*   **Constants:** Use `UPPER_SNAKE_CASE` for constants (e.g., `MAX_RETRIES = 3`).
+* **Language:** All code, file names, folder names, variables, functions, classes, comments, and documentation **must be in English.**
+* **Default Naming Conventions:** The following conventions should be considered the default for all projects. Project-specific deviations (e.g., for different programming languages) must be documented in that project's `README.md`.
+    * **File & Directory Naming:** Use `snake_case` (e.g., `custom_logger.py`, `multi_agent_framework/`).
+    * **Variable & Function Naming:** Use `snake_case` (e.g., `user_count`, `calculate_total()`).
+    * **Class & Type Naming:** Use `PascalCase` (also known as `CapWords`) (e.g., `FinancialTransaction`, `AgentConfig`).
+    * **Constants:** Use `UPPER_SNAKE_CASE` (e.g., `MAX_RETRIES = 3`).
 
-### 4. Python Environment and Dependency Management
+### 4. Environment and Dependency Management
 
-*   **Environment:** Each project must use its own Conda virtual environment.
-*   **`environment.yml`:** An `environment.yml` file must be created for each project.
-    *   Specify the Python version (e.g., Python 3.10 or 3.11).
-    *   List base dependencies (e.g., `python`, `pip`). Project-specific dependencies are added here.
-    *   Example structure:
+* **Principle:** Every code-based project that has external dependencies **must include a file that defines its environment and lists its dependencies.** This file ensures that the project can be set up consistently by any developer or automated system.
+* **Project-Specific Implementation:** The choice of tool (e.g., Conda, Pip, NPM, Maven) depends on the project's technology stack and must be documented in its `README.md`.
+
+* **Example for Python Projects:**
+    * **Environment:** Each Python project must use its own virtual environment (Conda is preferred).
+    * **`environment.yml`:** A `environment.yml` file must be created for each project, specifying the Python version and all dependencies. Example:
         ```yaml
         name: my_project_env
         channels:
@@ -66,259 +64,128 @@ Each project (e.g., `projects/financial_tracker/`) must have an internal structu
         dependencies:
           - python=3.10
           - pip
-          # - pandas
-          # - requests
-          # - etc.
+          - pandas
           - pip:
-            # - package_from_pip
+            - requests
         ```
-*   **Package Installation Priority:**
-    1.  `conda install -c conda-forge <package_name>`
-    2.  `conda install <package_name>` (from default channels)
-    3.  `pip install <package_name>` (for packages not available on Conda)
 
 ### 5. Coding Standards and Practices
 
-*   **PEP 8:** All Python code must adhere to the [PEP 8 style guide](https://www.python.org/dev/peps/pep-0008/). Pay special attention to line length (E501 - aim for 79 characters for code, 72 for docstrings/comments, but Black formatter will handle this mostly).
-*   **Entry Point:** Scripts intended to be run directly should use an `if __name__ == '__main__':` block and a `main()` function.
-    ```python
-    def main():
-        # Main logic here
-        pass
+This section outlines the standards for writing clean, maintainable, and robust code. It is divided into universal principles applicable to all projects and specific standards for Python development.
 
-    if __name__ == '__main__':
-        main()
+#### 5.1. Universal Principles (Applicable to All Projects)
+
+These principles represent a baseline for quality and should be applied to any type of project, regardless of the technology stack.
+
+* **Readability and Simplicity:** Code should be written to be as clear and easy to understand as possible. Prefer simple, direct solutions over overly complex or "clever" ones.
+* **Modularity:** Break down large, complex problems into smaller, manageable, single-responsibility functions, modules, or components.
+* **Don't Repeat Yourself (DRY):** Avoid duplicating code. Encapsulate and reuse common logic in functions or classes.
+* **Robust Error Handling:** Any operation that has the a-zA-Z to fail (e.g., file I/O, network requests, data parsing) must be wrapped in appropriate error-handling logic (`try-catch` blocks or equivalent).
+* **Structured Logging:** Use a structured logging framework for recording application events, warnings, and errors. Avoid using simple `print()` or `console.log()` statements for application output, as they lack context and control.
+* **In-Code Documentation:** All functions, methods, classes, and public modules must have clear documentation explaining their purpose, parameters, and return values (e.g., docstrings in Python, JSDoc in JavaScript). Add comments to explain complex or non-obvious business logic.
+* **Resource Management:** Ensure that resources like file handles, network connections, or database connections are always properly closed or released, preferably using language features that automate this (e.g., `with` statements in Python, `try-with-resources` in Java).
+
+#### 5.2. Python-Specific Standards
+
+For any project involving Python code, the following standards are mandatory.
+
+* **PEP 8:** All Python code must adhere to the [PEP 8 style guide](https://www.python.org/dev/peps/pep-0008/). It is highly recommended to use an automated formatter like `Black` to enforce this.
+* **Entry Point:** Scripts intended to be run directly must use a `main()` function and an `if __name__ == '__main__':` block.
+* **Type Hints:** Use type hints for all function/method signatures (arguments and return types) and for important variables. This is not optional.
+    ```python
+    from typing import List
+
+    def process_items(items: List[str]) -> int:
+        # function body
+        return len(items)
     ```
-*   **Functions:**
-    *   Create separate functions for specific, well-defined tasks.
-    *   Break down large functions into smaller, manageable sub-functions.
-    *   Group logically related functions in the same module (`.py` file).
-*   **Command-Line Arguments:** Use the `argparse` module for scripts that take command-line arguments. Implement a `get_args()`-like function.
+* **Docstrings:** Write descriptive docstrings in English for every module, class, and function. Google style is preferred.
     ```python
-    import argparse
-
-    def get_args():
-        parser = argparse.ArgumentParser(description="Script description.")
-        parser.add_argument('--input', required=True, help='Input file path')
-        # Add other arguments
-        return parser.parse_args()
-
-    # In main():
-    # args = get_args()
-    # process_file(args.input)
-    ```
-*   **Error Handling:** Implement robust error handling using `try-except` blocks for operations with error potential (e.g., file I/O, API calls, data conversions). Be specific with exception types.
-    ```python
-    try:
-        with open('file.txt', 'r') as f:
-            content = f.read()
-    except FileNotFoundError:
-        logging.error("File not found.")
-    except IOError:
-        logging.error("Error reading file.")
-    except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
-    ```
-*   **Logging:**
-    *   Use the standard `logging` module instead of `print()` for application events, errors, and debugging information.
-    *   A basic logging configuration function is provided in [`shared_libs/custom_logger.py`](python_workspace/shared_libs/custom_logger.py:1). This function should set up log format, level (default to INFO), and direct logs to a file in the project-specific `logs/` folder (e.g., `app.log`).
-    *   Example usage in a project's `main.py`:
-        ```python
-        import logging
-        # Assuming custom_logger is in PYTHONPATH or installed
-        # from shared_libs.custom_logger import setup_logging
-
-        # setup_logging(project_log_dir='path/to/project/logs')
-        # logging.info("Application started.")
-        ```
-*   **Type Hints:** Use type hints for function definitions (arguments and return types) and important variables. This improves code readability and allows for static analysis.
-    ```python
-    from typing import List, Dict
-
-    def process_data(data: List[Dict[str, str]]) -> int:
-        # implementation
-        return 0
-    ```
-*   **Docstrings:** Write descriptive docstrings in English for every module, class, and function. Google style is preferred.
-    *   **Module:** Explain the purpose of the module and its contents.
-    *   **Function/Method:** Describe what the function does, its arguments (`Args:`), and what it returns (`Returns:`). Mention any exceptions raised (`Raises:`).
-    ```python
-    """This module provides utility functions for X."""
-
-    def my_function(param1: int, param2: str) -> bool:
-        """
-        Does something interesting.
+    def my_function(param1: int) -> bool:
+        """Does something interesting.
 
         Args:
-            param1: The first parameter.
-            param2: The second parameter.
+            param1: The first parameter, representing...
 
         Returns:
             True if successful, False otherwise.
-
-        Raises:
-            ValueError: If param2 is invalid.
         """
-        # ...
         pass
     ```
-*   **Comments:** Add comments (in English) to explain complex or non-obvious parts of the code. Avoid over-commenting simple code.
-*   **Efficient Code:** Prefer list comprehensions, generator expressions, and Python's built-in functions where appropriate for conciseness and performance.
-*   **Resource Management:** Use the `with` statement (context managers) for operations that use resources that need to be properly closed or released (e.g., file handling, database connections).
-    ```python
-    with open('data.txt', 'r') as f:
-        # process file
-        pass
-    ```
-*   **Shared Libraries (`shared_libs`):**
-    *   [`custom_logger.py`](python_workspace/shared_libs/custom_logger.py:1): Provides a configurable logging setup.
-    *   [`pdf_utils.py`](python_workspace/shared_libs/pdf_utils.py:1): Contains functions for PDF text extraction, designed to be flexible and extensible.
+* **Command-Line Arguments:** Use the `argparse` module for any script that accepts command-line arguments.
+* **Shared Libraries:** For any code that is intended to be used by multiple projects, consider placing it in a dedicated shared library project within the `01_hyper_space/` or a similar category, rather than in a specific application project.
 
 ### 6. Configuration Management
 
-*   Use a configuration file named `config.json` for each project, located at `projects/[project_name]/config.json`.
-*   If `config.json` contains sensitive information (API keys, passwords), it **must** be added to `.gitignore` (a general rule `projects/*/config.json` is already in the root `.gitignore`).
-*   For each `config.json`, a `config.template.json` file must be created and committed to the repository. This template should contain placeholders or examples instead of actual sensitive values.
-    *   Example `config.template.json`:
-        ```json
-        {
-          "api_key": "YOUR_API_KEY_HERE",
-          "database_url": "your_db_url_or_placeholder",
-          "setting_x": "default_value"
-        }
-        ```
+* **Principle:** If a project requires configuration that includes sensitive values (e.g., API keys, passwords, connection strings), these values **must not** be committed to the repository.
+* **Implementation:**
+    * The sensitive values should be placed in a configuration file (e.g., `config.json`, `.env`).
+    * This file **must** be listed in the project's `.gitignore` file.
+    * A template file (e.g., `config.template.json`, `.env.example`) **must** be created and committed to the repository. This template should contain all the necessary configuration keys but with placeholder or empty values.
 
-### 7. Automation Tools (Setup and Configuration Recommendation)
+### 7. Recommended Tooling for Python Projects
 
-It is highly recommended to use the following tools for code quality:
-*   **`Black`**: For opinionated code formatting.
-*   **`Flake8`**: For linting (style guide enforcement, error checking).
-    *   Consider plugins like `flake8-bugbear`, `flake8-comprehensions`.
-*   **`Mypy`**: For static type checking.
-*   **`isort`**: For sorting imports automatically.
+For Python-based projects, it is highly recommended to use the following tools to ensure code quality and consistency. Configuration and integration should be done via `pyproject.toml` or other modern configuration files.
 
-**Integration with Pre-commit Hooks:**
-Using `pre-commit` is strongly recommended to automate these checks before commits.
-1.  Install `pre-commit`: `pip install pre-commit`
-2.  Create a `.pre-commit-config.yaml` file in the root of `python_workspace/`:
-    ```yaml
-    # See https://pre-commit.com for more information
-    # See https://pre-commit.com/hooks.html for more hooks
-    repos:
-    -   repo: https://github.com/pre-commit/pre-commit-hooks
-        rev: v4.5.0 # Use the latest stable version
-        hooks:
-        -   id: trailing-whitespace
-        -   id: end-of-file-fixer
-        -   id: check-yaml
-        -   id: check-added-large-files
-    -   repo: https://github.com/psf/black
-        rev: 24.4.2 # Use the latest stable version
-        hooks:
-        -   id: black
-            language_version: python3.10 # Or your target Python version
-    -   repo: https://github.com/PyCQA/flake8
-        rev: 7.0.0 # Use the latest stable version
-        hooks:
-        -   id: flake8
-    -   repo: https://github.com/PyCQA/isort
-        rev: 5.13.2 # Use the latest stable version
-        hooks:
-        -   id: isort
-            name: isort (python)
-    # -   repo: https://github.com/pre-commit/mirrors-mypy
-    #     rev: 'v1.10.0'  # Use the latest stable version
-    #     hooks:
-    #     -   id: mypy
-    #         args: [--no-strict-optional, --ignore-missing-imports]
-    #         # additional_dependencies: [types-requests, ...] # Add types for libraries
-    ```
-3.  Install the git hooks: `pre-commit install`
-Now, these tools will run automatically on `git commit`.
+* **Formatting:** `Black` for opinionated, consistent code formatting.
+* **Linting:** `Ruff` or `Flake8` for style guide enforcement and error checking.
+* **Type Checking:** `Mypy` for static type analysis.
+* **Import Sorting:** `isort` for automatically organizing imports.
 
-**IDE Integration (Example: VS Code):**
-*   Install Python extension for VS Code.
-*   Configure settings (`.vscode/settings.json` or user settings):
-    ```json
-    {
-        "python.formatting.provider": "black",
-        "python.linting.flake8Enabled": true,
-        "python.linting.mypyEnabled": true, // If using Mypy
-        "editor.formatOnSave": true,
-        "[python]": {
-            "editor.defaultFormatter": "ms-python.black-formatter" // if black formatter extension is used
-        },
-        "python.sortImports.path": "isort", // if isort is installed and in PATH
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit" // For isort or similar
-        }
-    }
-    ```
+**Automation via Pre-commit Hooks:**
+Using `pre-commit` is the standard way to automate these checks. A `.pre-commit-config.yaml` should be created in the project root to configure the hooks.
 
 ## II. GUIDELINES FOR INITIATING NEW PROJECTS
 
-1.  **Create Project Directory:** Under `projects/`, create a new directory for your project (e.g., `projects/my_new_project/`). Use `snake_case`.
-2.  **Internal Structure:** Set up the standard internal project structure as defined in section I.2.
-3.  **`environment.yml`:** Create the Conda environment file, specifying Python version and dependencies.
-4.  **`config.template.json`:** Create a template for the project's configuration.
-5.  **`README.md`:** Create a project-specific `README.md` explaining its purpose, setup (Conda env, `config.json`), and how to run it.
-6.  **Add to `.gitignore` (if needed):** Ensure any new project-specific sensitive files or large data files are covered by `.gitignore` patterns.
-7.  **Initial Commit:** Make an initial commit for the new project structure.
+The formal, step-by-step process for creating new projects is now detailed in the `project_lifecycle_guidelines.md` and `developer_quickstart.md` documents. Please refer to them for procedural guidance.
 
 ## III. DEVELOPMENT WORKFLOW AND GIT STRATEGY
 
+This section defines the mandatory Git workflow for all projects.
+
 ### 1. Branches
 
-*   **`main` (or `master`):** This branch should always reflect a stable, production-ready state. Direct commits to `main` are discouraged.
-*   **`develop` (Optional but Recommended):** A branch for integrating features. When features are stable here, they can be merged into `main`.
-*   **Feature Branches (`feature/`, `feat/`):** All new development (features, enhancements) must be done in feature branches.
-    *   Branch off from `develop` (if used) or `main`.
-    *   Naming: `feature/brief-description` or `feat/JIRA-123-brief-description` (e.g., `feature/user-authentication`).
-*   **Bugfix Branches (`bugfix/`, `fix/`):** For fixing bugs.
-    *   Branch off from the branch where the bug exists (usually `main` or `develop`).
-    *   Naming: `bugfix/brief-description` or `fix/JIRA-456-fix-login-issue`.
-*   **Hotfix Branches (`hotfix/`):** For critical fixes directly on `main` that need to be deployed urgently.
-    *   Branch off from `main`.
-    *   After deployment, merge back into `main` and `develop`.
+* **`main`:** This branch should always reflect a stable, production-ready state. Direct commits to `main` are discouraged.
+* **`develop` (Optional but Recommended):** A branch for integrating features. When features are stable here, they can be merged into `main`.
+* **Feature Branches (`feature/`, `feat/`):** All new development (features, enhancements) must be done in feature branches.
+    * Branch off from `develop` (if used) or `main`.
+    * Naming: `feature/brief-description` or `feat/JIRA-123-brief-description`.
+* **Bugfix Branches (`bugfix/`, `fix/`):** For fixing bugs.
+    * Branch off from the branch where the bug exists (usually `main` or `develop`).
+    * Naming: `bugfix/brief-description` or `fix/JIRA-456-fix-login-issue`.
+* **Hotfix Branches (`hotfix/`):** For critical fixes directly on `main`.
 
 ### 2. Commits
 
 * **Atomic Commits:** Each commit should represent a single logical change. Avoid large, unrelated changes in one commit.
-* **Commit Messages:** Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification. This helps in generating changelogs and understanding history.
+* **Commit Messages:** Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
     * Format: `<type>[optional scope]: <description>`
-    * Example types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.
-
-    **_Session Identifier Requirement:_**
-    * **_To ensure full traceability, every commit subject line MUST end with a session identifier tag._**
-    * **_Format:_** `(<S-GlobalNo>-<PRJ>-<C-ConvNo>-<Date>-<CommitSeqNo>)`
-    * **_Example Subject Line:_** `feat(auth): add user registration endpoint (S0015-MAF-C01-20250623-1)`
-    * **_Commit Counter:_** _To manage the `[CommitSeqNo]`, a `Commit Counter` must be maintained in the header of the relevant project's `llm_assisted_development_log.md` for the current conversation._
-
-    **_Guideline for LLM-Generated Commit Messages_**
-    * When an LLM generates a multi-line commit message to be executed directly in a command-line terminal, it must be formatted using multiple `-m` flags to avoid shell parsing errors.
-    * The **first** `-m` flag is used for the commit **subject**.
-    * Each **subsequent** `-m` flag is used for a **new paragraph or bullet point** in the commit **body**.
-    * **Correct Command-Line Execution:**
-        ```bash
-        git commit -m "feat(auth): add endpoint (S0015-MAF-C01-20250623-1)" -m "Implement the API endpoint for new user registration." -m "Includes input validation and password hashing."
-        ```
-* **Lint and Test Before Committing:** Ensure your code lints, passes type checks, and passes relevant tests before committing (ideally automated with pre-commit hooks).
+    * **Session Identifier Requirement:**
+        * To ensure full traceability, every commit subject line MUST end with a session identifier tag.
+        * **Format:** `(<S-GlobalNo>-<PRJ>-<C-ConvNo>-<Date>-<CommitSeqNo>)`
+        * **Example Subject Line:** `feat(auth): add user registration endpoint (S0015-MAF-C01-20250623-1)`
+        * **Commit Counter:** To manage the `[CommitSeqNo]`, a `Commit Counter` must be maintained in the header of the relevant project's `llm_assisted_development_log.md` for the current conversation.
+    * **Guideline for LLM-Generated Commit Messages:**
+        * When an LLM generates a multi-line commit message to be executed directly in a command-line terminal, it must be formatted using multiple `-m` flags.
+        * The **first** `-m` flag is for the commit **subject**.
+        * Each **subsequent** `-m` flag is for a **new paragraph or bullet point** in the commit **body**.
+        * **Correct Command-Line Execution:**
+            ```bash
+            git commit -m "feat(auth): add endpoint (S0015-MAF-C01-20250623-1)" -m "Implement the API endpoint for new user registration."
+            ```
+* **Lint and Test Before Committing:** Ensure your code lints and passes relevant tests before committing (ideally automated with pre-commit hooks).
 
 ### 3. Pull Requests (PRs) / Merge Requests (MRs)
 
-*   All changes, especially to `shared_libs`, `develop`, or `main`, must go through a Pull Request process, even for solo developers (as a self-review step).
-*   **PR Description:** Clearly describe the changes made, the problem solved, and how to test. Link to relevant issues.
-*   **Code Review:** If working in a team, PRs must be reviewed by at least one other developer.
-*   **Merge Strategy:**
-    *   Prefer squash merges or rebase and merge for feature branches into `develop`/`main` to keep history clean.
-    *   Ensure the feature branch is up-to-date with the target branch before merging.
-*   **Delete Branch After Merge:** Delete feature/bugfix branches after they are merged.
+* All changes must go through a Pull Request process, even for solo developers (as a self-review step).
+* **PR Description:** Clearly describe the changes made, the problem solved, and how to test. Link to relevant issues.
+* **Code Review:** If working in a team, PRs must be reviewed by at least one other developer.
+* **Merge Strategy:**
+    * Prefer squash merges or rebase and merge for feature branches into `develop`/`main` to keep history clean.
+    * Ensure the feature branch is up-to-date with the target branch before merging.
+* **Delete Branch After Merge:** Delete feature/bugfix branches after they are merged.
 
 ### 4. Versioning (Optional)
 
-*   Consider using [Semantic Versioning (SemVer)](https://semver.org/) (e.g., `MAJOR.MINOR.PATCH`) for projects or shared libraries, especially if they are to be consumed by others.
-*   Use Git tags to mark releases (e.g., `git tag v1.0.0`).
-
----
-
-By following these standards, we aim to build a robust, maintainable, and collaborative codebase.
+* Consider using [Semantic Versioning (SemVer)](https://semver.org/) (e.g., `MAJOR.MINOR.PATCH`) for projects or shared libraries.
+* Use Git tags to mark releases (e.g., `git tag v1.0.0`).

@@ -35,7 +35,7 @@ Compile a comprehensive **Draft Handover Report**. This report should include:
     *   Merges performed.
     *   Any significant rebasing or rollback operations (if applicable and noteworthy, along with reasons).
 6.  **The Very Next Immediate Planned Step(s) You Were About to Undertake or Propose:** What was the immediate next piece of work?
-7.  **Pointers to Crucial Documentation/Standard Files:** Remind the user/next LLM that they are required to be familiar with all procedural documents within the `development_standards` project, as well as the main project `README.md` and the `user_profile_for_llm_assistance.md` file in the workspace root. **Crucially, explicitly point the incoming LLM to the `llm_takeover_procedures.md` document.**
+7.  **Pointers to Crucial Documentation/Standard Files:** Remind the user/next LLM that they are required to be familiar with all procedural documents within the `most_comprehensive_approach` project, as well as the main project `README.md` and the `user_profile_for_llm_assistance.md` file in the workspace root. **Crucially, explicitly point the incoming LLM to the `llm_takeover_procedures.md` document.**
 8.  **Your Role During Tenure:** Briefly describe the role you fulfilled.
 9.  **Specific Instructions/Context for the New LLM (Optional but helpful):** Any nuances, unresolved discussions, or specific areas the new LLM should pay attention to.
 10. **Review and Suggest User Profile Updates (Optional):**

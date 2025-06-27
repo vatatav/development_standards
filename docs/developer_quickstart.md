@@ -4,7 +4,7 @@
 
 This document provides practical, step-by-step instructions for common development tasks within this workspace. It is intended as a quick reference or "How to..." guide.
 
-For the detailed philosophy, standards, and formal procedures, always refer to the other documents in the `development_standards` project, such as `standards.md` and `project_lifecycle_guidelines.md`.
+For the detailed philosophy, standards, and formal procedures, always refer to the other documents in the `most_comprehensive_approach` project, such as `standards.md` and `project_lifecycle_guidelines.md`.
 
 ## 2. How to: Start a New Project
 
@@ -50,7 +50,7 @@ This is the standard workflow for beginning a new feature or bug fix.
 
 ## 4. How to: Use the Multi-Agent Framework
 
-When working on the `multi-agent-framework` project itself (or any other project configured to use it):
+When working on the `multi_clever_agents` project itself (or any other project configured to use it):
 
 1.  **Verify Runtime Files:** Ensure the project root contains the two runtime configuration files, which are ignored by Git:
     * `.roomodes` (contains agent definitions)

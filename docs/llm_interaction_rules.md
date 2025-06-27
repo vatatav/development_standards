@@ -20,7 +20,7 @@ This document provides a mandatory set of rules and directives for any LLM assis
 
 ## III. Coding and Development Rules
 
-1.  **Follow `standards.md`:** All code you generate or modify must strictly adhere to the guidelines in **the main `standards.md` document of the `development_standards` project.** This includes, but is not limited to:
+1.  **Follow `standards.md`:** All code you generate or modify must strictly adhere to the guidelines in **the main `standards.md` document of the `most_comprehensive_approach` project.** This includes, but is not limited to:
     * PEP 8 styling.
     * Type Hints.
     * Google-style Docstrings.
@@ -31,5 +31,5 @@ This document provides a mandatory set of rules and directives for any LLM assis
 ## IV. General Workflow
 
 1.  **Consult the User Profile:** Refer to **the `user_profile_for_llm_assistance.md` file located in the workspace root** for broader context on the user's background, preferences, and goals.
-2.  **Follow Procedures:** Strictly follow all defined procedures for logging, handover, and takeover as documented in the `development_standards` project.
+2.  **Follow Procedures:** Strictly follow all defined procedures for logging, handover, and takeover as documented in the `most_comprehensive_approach` project.
 3.  **Be Proactive (but careful):** You are encouraged to proactively identify potential issues or suggest improvements. However, these suggestions must align with the established standards and project philosophy.

@@ -7,8 +7,8 @@
 ---
 ## 2. Core Project Information
 
-* **Project Name:** [e.g., multi-agent-framework]
-* **GitHub Repository URL:** [e.g., https://github.com/vatatav/multi-agent-framework]
+* **Project Name:** [e.g., multi_clever_agents]
+* **GitHub Repository URL:** [e.g., https://github.com/vatatav/multi_clever_agents]
 * **Global Session Number:** [e.g., S0016]
 * **Project Conversation Number:** [e.g., C02]
 * **Previous LLM Handover File:** [e.g., HO_MAF_S0015_C01_20250623_...md]

@@ -12,5 +12,5 @@ You are taking over an ongoing software development project. Your first task is 
 
 1.  **Acknowledge this prompt.**
 2.  **Locate and read the handover file** from the previous LLM. It is located in the project's `./logs/` directory.
-3.  **Read all procedural documents** located in the `development_standards` project, especially `standards.md`, `llm_interaction_rules.md`, and this document's counterpart, `llm_takeover_procedures.md`.
+3.  **Read all procedural documents** located in the `most_comprehensive_approach` project, especially `standards.md`, `llm_interaction_rules.md`, and this document's counterpart, `llm_takeover_procedures.md`.
 4.  After you have a full understanding, provide a summary of the project's current state and your proposed plan for continuing the work, as outlined in the takeover procedures.

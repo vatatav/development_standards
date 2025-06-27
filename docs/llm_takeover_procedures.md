@@ -58,7 +58,7 @@ Upon receiving the initial prompt from the user, you must perform the following 
 To fully understand the project you are taking over, you must review the following resources in order:
 
 1.  **The `takeover_context.md` file:** This file, provided by the user, contains the specific context for this session, including the handover file name and project manifest.
-2.  **The `development_standards` Project:** This is the most critical source of information. You must be familiar with **all documents** within it, especially:
+2.  **The `most_comprehensive_approach` Project:** This is the most critical source of information. You must be familiar with **all documents** within it, especially:
     * `standards.md`
     * `llm_interaction_rules.md`
     * `logging_procedures_guidelines.md`
